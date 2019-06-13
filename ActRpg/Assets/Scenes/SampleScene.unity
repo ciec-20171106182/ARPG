@@ -481,6 +481,7 @@ MonoBehaviour:
   model: {fileID: 1080124598}
   pi: {fileID: 0}
   walkspeed: 1.4
+  runspeed: 2.7
   anim: {fileID: 0}
 --- !u!54 &1312936339
 Rigidbody:
@@ -529,11 +530,16 @@ MonoBehaviour:
   KeyDown: s
   KeyRight: d
   KeyLeft: a
+  KeyA: left shift
+  KeyB: 
+  KeyC: 
+  KeyD: 
   Dup: 0
   Dright: 0
-  inputEnabled: 1
+  run: 0
   Dmag: 0
   Dvec: {x: 0, y: 0, z: 0}
+  inputEnabled: 1
 --- !u!1 &1659780147
 GameObject:
   m_ObjectHideFlags: 0

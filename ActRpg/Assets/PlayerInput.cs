@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
+    [Header("Key Setting")]
     public string KeyUp = "w";
     public string KeyDown = "s";
     public string KeyRight = "d";
     public string KeyLeft = "a";
+    public string KeyA;
+    public string KeyB;
+    public string KeyC;
+    public string KeyD;
 
+    [Header("Output signal")]
     public float Dup;
     public float Dright;
-
-    public bool inputEnabled=true;
-
+    public bool run = false;
     public float Dmag;
     public Vector3 Dvec;
-    
+    [Header("Other")]
+    public bool inputEnabled = true;
 
 
     private float targetDup;
@@ -45,5 +50,7 @@ public class PlayerInput : MonoBehaviour
         Dright = Mathf.SmoothDamp(Dright, targetDright, ref velocityDright, 0.1f);
         Dmag = Mathf.Sqrt((Dup * Dup) + (Dright * Dright));
         Dvec = Dright * transform.right + Dup * transform.forward;
+
+        run = Input.GetKey(KeyA);
     }
 }
