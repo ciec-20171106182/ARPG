@@ -14,6 +14,11 @@ public class PlayerInput : MonoBehaviour
 
     public bool inputEnabled=true;
 
+    public float Dmag;
+    public Vector3 Dvec;
+    
+
+
     private float targetDup;
     private float targetDright;
     private float velocityDup;
@@ -38,6 +43,7 @@ public class PlayerInput : MonoBehaviour
         }
         Dup = Mathf.SmoothDamp(Dup, targetDup, ref velocityDup, 0.1f);//调用SmoothDamp对上下旗帜进行衰减处理，移动更平滑。
         Dright = Mathf.SmoothDamp(Dright, targetDright, ref velocityDright, 0.1f);
-
+        Dmag = Mathf.Sqrt((Dup * Dup) + (Dright * Dright));
+        Dvec = Dright * transform.right + Dup * transform.forward;
     }
 }
