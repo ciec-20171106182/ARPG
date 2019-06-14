@@ -25,6 +25,19 @@ public class ActorController : MonoBehaviour
     {
         float targetRunMunlti= ((pi.run) ? 2.0f : 1.0f);
         anim.SetFloat("forword", pi.Dmag * Mathf.Lerp(anim.GetFloat("forword"),targetRunMunlti,0.3f));//减缓站立动画或走路动画切换到奔跑动画的速度
+
+       if(pi.jump)
+        {
+            if (pi.run)
+            {
+                anim.SetTrigger("run_jump");
+            }
+            else
+            {
+                anim.SetTrigger("idle_jump");
+            }
+            
+        }
         if (pi.Dmag>0.1f)
         {
             Vector3 targetForward = Vector3.Slerp(model.transform.forward, pi.Dvec, 0.3f);//球形线性插值，减缓旋转速度

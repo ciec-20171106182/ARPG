@@ -13,13 +13,15 @@ public class PlayerInput : MonoBehaviour
     public string KeyB;
     public string KeyC;
     public string KeyD;
-
-    [Header("Output signal")]
     public float Dup;
     public float Dright;
-    public bool run = false;
     public float Dmag;
     public Vector3 Dvec;
+    [Header("Output signal")]
+    
+    public bool run = false;
+    public bool jump=false;
+    private bool lastjump;
     [Header("Other")]
     public bool inputEnabled = true;
 
@@ -48,9 +50,34 @@ public class PlayerInput : MonoBehaviour
         }
         Dup = Mathf.SmoothDamp(Dup, targetDup, ref velocityDup, 0.1f);//调用SmoothDamp对上下旗帜进行衰减处理，移动更平滑。
         Dright = Mathf.SmoothDamp(Dright, targetDright, ref velocityDright, 0.1f);
-        Dmag = Mathf.Sqrt((Dup * Dup) + (Dright * Dright));
-        Dvec = Dright * transform.right + Dup * transform.forward;
+        Vector2 tempDaxis = SquareToCircle(new Vector2(Dup, Dright));
+        float Dup2 = tempDaxis.x;
+        float Dright2 = tempDaxis.y;
+
+        Dmag = Mathf.Sqrt((Dup2 * Dup2) + (Dright2 * Dright2));
+        Dvec = Dright2 * transform.right + Dup2 * transform.forward;
 
         run = Input.GetKey(KeyA);
+        
+        bool newjump = Input.GetKey(KeyB);
+        
+        if (newjump!=lastjump&&newjump==true)
+        {
+            jump = true;
+           
+        }
+        else
+        {
+            jump = false;
+        }
+        lastjump = newjump;
     }
+    private Vector2 SquareToCircle(Vector2 input)
+    {
+        Vector2 output = Vector2.zero;
+        output.x = input.x * Mathf.Sqrt(1 - (input.y * input.y) / 2.0f);
+        output.y = input.y * Mathf.Sqrt(1 - (input.x * input.x) / 2.0f);
+        return output;
+    }
+
 }
