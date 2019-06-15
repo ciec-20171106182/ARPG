@@ -8,10 +8,12 @@ public class ActorController : MonoBehaviour
     public PlayerInput pi;
     public float walkspeed=1.4f;
     public float runspeed = 2.7f;
+    public float junmVelcity = 4.0f;
     [SerializeField]
     private Animator anim;
     private Rigidbody rigi;
     private Vector3 movingVec;
+    private Vector3 thrustVec;
     // Start is called before the first frame update
     void Awake()
     {
@@ -32,10 +34,7 @@ public class ActorController : MonoBehaviour
             {
                 anim.SetTrigger("run_jump");
             }
-            else
-            {
-                anim.SetTrigger("idle_jump");
-            }
+           
             
         }
         if (pi.Dmag>0.1f)
@@ -49,6 +48,28 @@ public class ActorController : MonoBehaviour
     private void FixedUpdate()
     {
         //rigi.position += movingVec * Time.fixedDeltaTime;
-        rigi.velocity = new Vector3(movingVec.x, rigi.velocity.y, movingVec.z);
+        rigi.velocity = new Vector3(movingVec.x, rigi.velocity.y, movingVec.z)+thrustVec;
+        thrustVec = Vector3.zero;
+    }
+
+
+
+
+    public void onenterRun_jump()
+    {
+       
+        thrustVec = new Vector3(0, junmVelcity, 0);
+    }
+    public void onexitRun_jump()
+    {
+        
+    }
+   public void isGound()
+    {
+        anim.SetBool("isGound", true);
+    }
+    public void isNotGound()
+    {
+        anim.SetBool("isGound", false);
     }
 }
