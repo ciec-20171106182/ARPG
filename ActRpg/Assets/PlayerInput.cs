@@ -22,6 +22,8 @@ public class PlayerInput : MonoBehaviour
     public bool run = false;
     public bool jump=false;
     private bool lastjump;
+    public bool attack = false;
+    private bool lastattack;
     [Header("Other")]
     public bool inputEnabled = true;
 
@@ -71,6 +73,19 @@ public class PlayerInput : MonoBehaviour
             jump = false;
         }
         lastjump = newjump;
+
+        bool newattack = Input.GetKey(KeyC);
+
+        if (newattack != lastattack && newattack == true)
+        {
+            attack = true;
+
+        }
+        else
+        {
+            attack = false;
+        }
+        lastattack = newattack;
     }
     private Vector2 SquareToCircle(Vector2 input)
     {

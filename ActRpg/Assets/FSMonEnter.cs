@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FSMonRun_jump : StateMachineBehaviour
+public class FSMonEnter : StateMachineBehaviour
 {
     public string[] onEnterMessage;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         foreach (var msg in onEnterMessage)
-        {
-            animator.gameObject.SendMessageUpwards(msg);
-        }
-        
+      {
+          animator.gameObject.SendMessageUpwards(msg);
+      } 
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

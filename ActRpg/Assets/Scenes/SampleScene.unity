@@ -596,7 +596,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1066725145}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.4, y: 8.9, z: 1.94}
+  m_LocalPosition: {x: -7.4, y: 7.97, z: 1.94}
   m_LocalScale: {x: 2.4076, y: 0.029302, z: 2.8611}
   m_Children: []
   m_Father: {fileID: 0}
@@ -664,7 +664,9 @@ MonoBehaviour:
   pi: {fileID: 0}
   walkspeed: 1.4
   runspeed: 4
-  junmVelcity: 8
+  junmVelcity: 7
+  rollVelicty: 1.3
+  rollLimitSpeed: 12
   anim: {fileID: 0}
 --- !u!54 &1312936339
 Rigidbody:
@@ -716,8 +718,8 @@ MonoBehaviour:
   KeyRight: d
   KeyLeft: a
   KeyA: left shift
-  KeyB: j
-  KeyC: 
+  KeyB: space
+  KeyC: k
   KeyD: 
   Dup: 0
   Dright: 0
@@ -725,6 +727,7 @@ MonoBehaviour:
   Dvec: {x: 0, y: 0, z: 0}
   run: 0
   jump: 0
+  attack: 0
   inputEnabled: 1
 --- !u!1 &1383224147
 GameObject:

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FSMexitRun_jump : StateMachineBehaviour
+public class FSMonExit : StateMachineBehaviour
 {
     public string[] onExitMessage;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
@@ -20,10 +20,10 @@ public class FSMexitRun_jump : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        foreach (var msg in onExitMessage)
-        {
-            animator.gameObject.SendMessageUpwards(msg);
-        }
+       foreach (var msg in onExitMessage)
+      {
+          animator.gameObject.SendMessageUpwards(msg);
+      }  
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

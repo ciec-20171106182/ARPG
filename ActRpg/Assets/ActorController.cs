@@ -9,11 +9,14 @@ public class ActorController : MonoBehaviour
     public float walkspeed=1.4f;
     public float runspeed = 2.7f;
     public float junmVelcity = 4.0f;
+    public float rollVelicty = 1.0f;
+    public float rollLimitSpeed =10.0f;
     [SerializeField]
     private Animator anim;
     private Rigidbody rigi;
     private Vector3 movingVec;
-    private Vector3 thrustVec;
+    private Vector3 upThrustVec;
+    private Vector3 forwardThrustVec;
     // Start is called before the first frame update
     void Awake()
     {
@@ -33,14 +36,27 @@ public class ActorController : MonoBehaviour
             if (pi.run)
             {
                 anim.SetTrigger("run_jump");
+
             }
-           
-            
+               
+        }
+        if (pi.jump)
+        {
+            anim.SetTrigger("roll");
+        }
+
+        if(pi.attack)
+        {
+            anim.SetTrigger("attack");
         }
         if (pi.Dmag>0.1f)
         {
             Vector3 targetForward = Vector3.Slerp(model.transform.forward, pi.Dvec, 0.3f);//球形线性插值，减缓旋转速度
             model.transform.forward = targetForward;
+        }
+        if(rigi.velocity.magnitude>rollLimitSpeed)
+        {
+            anim.SetTrigger("limitRoll");
         }
         
         movingVec = pi.Dmag * model.transform.forward * walkspeed * ((pi.run) ? runspeed : 1.0f);
@@ -48,8 +64,9 @@ public class ActorController : MonoBehaviour
     private void FixedUpdate()
     {
         //rigi.position += movingVec * Time.fixedDeltaTime;
-        rigi.velocity = new Vector3(movingVec.x, rigi.velocity.y, movingVec.z)+thrustVec;
-        thrustVec = Vector3.zero;
+        rigi.velocity = new Vector3(movingVec.x, rigi.velocity.y, movingVec.z)+upThrustVec+forwardThrustVec;
+        upThrustVec = Vector3.zero;
+        forwardThrustVec = Vector3.zero;
     }
 
 
@@ -58,13 +75,18 @@ public class ActorController : MonoBehaviour
     public void onenterRun_jump()
     {
        
-        thrustVec = new Vector3(0, junmVelcity, 0);
+        upThrustVec = new Vector3(0, junmVelcity, 0);//给一个向上的冲量，使人物跳起。
     }
     public void onexitRun_jump()
     {
         
     }
-   public void isGound()
+    public void onRoll()
+    {
+
+        forwardThrustVec = new Vector3(0, rollVelicty, 0);//给一个向前的冲量，使人物翻滚更流畅。
+    }
+    public void isGound()
     {
         anim.SetBool("isGound", true);
     }
