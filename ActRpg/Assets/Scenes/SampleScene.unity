@@ -273,6 +273,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &404824449
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 404824450}
+  m_Layer: 0
+  m_Name: CameraHandle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &404824450
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404824449}
+  m_LocalRotation: {x: 0.08672103, y: 0, z: 0, w: 0.9962327}
+  m_LocalPosition: {x: 0, y: 1.52, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 870340496}
+  m_Father: {fileID: 1312936340}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 9.95, y: 0, z: 0}
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,12 +379,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534669902}
-  m_LocalRotation: {x: 0.10711831, y: -0, z: -0, w: 0.9942463}
-  m_LocalPosition: {x: 0, y: 2.07, z: -5.2}
+  m_LocalRotation: {x: 0.19293681, y: -0, z: -0, w: 0.98121125}
+  m_LocalPosition: {x: 0, y: 2.2598975, z: -2.71296}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1312936340}
-  m_RootOrder: 1
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 12.298, y: 0, z: 0}
 --- !u!1 &677234886
 GameObject:
@@ -511,6 +542,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f9d958fbcd96e44ca35a77a15e3187a, type: 3}
+--- !u!1 &870340495
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 870340496}
+  - component: {fileID: 870340497}
+  m_Layer: 0
+  m_Name: camerpos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &870340496
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 870340495}
+  m_LocalRotation: {x: 0.107118316, y: -0, z: -0, w: 0.99424636}
+  m_LocalPosition: {x: 0, y: 0.25999996, z: -2.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 404824450}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &870340497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 870340495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee9bb6f1f1c2b164288fadda7e8d8f36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pi: {fileID: 1312936341}
+  Horizontalspeed: 100
 --- !u!1 &1066725145
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,6 +743,7 @@ MonoBehaviour:
   junmVelcity: 7
   rollVelicty: 1.3
   rollLimitSpeed: 12
+  aniweight: 0
   anim: {fileID: 0}
 --- !u!54 &1312936339
 Rigidbody:
@@ -696,8 +773,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1080124599}
-  - {fileID: 534669905}
   - {fileID: 1383224148}
+  - {fileID: 404824450}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -724,7 +801,13 @@ MonoBehaviour:
   Dup: 0
   Dright: 0
   Dmag: 0
+  jUp: 0
+  jRight: 0
   Dvec: {x: 0, y: 0, z: 0}
+  RKeyUp: up
+  RKeyDown: down
+  RKeyRight: right
+  RKeyLeft: left
   run: 0
   jump: 0
   attack: 0
@@ -758,7 +841,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1312936340}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1383224149
 MonoBehaviour:

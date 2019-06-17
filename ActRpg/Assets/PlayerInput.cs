@@ -15,8 +15,15 @@ public class PlayerInput : MonoBehaviour
     public string KeyD;
     public float Dup;
     public float Dright;
+
     public float Dmag;
+    public float jUp;
+    public float jRight;
     public Vector3 Dvec;
+    public string RKeyUp;
+    public string RKeyDown;
+    public string RKeyRight;
+    public string RKeyLeft;
     [Header("Output signal")]
     
     public bool run = false;
@@ -30,6 +37,7 @@ public class PlayerInput : MonoBehaviour
 
     private float targetDup;
     private float targetDright;
+    
     private float velocityDup;
     private float velocityDright;
 
@@ -44,6 +52,8 @@ public class PlayerInput : MonoBehaviour
     {
         targetDup = (Input.GetKey(KeyUp) ? 1.0f : 0) - (Input.GetKey(KeyDown) ? 1.0f : 0);
         targetDright = (Input.GetKey(KeyRight) ? 1.0f : 0) - (Input.GetKey(KeyLeft) ? 1.0f : 0);
+        jUp = (Input.GetKey(RKeyUp) ? 1.0f : 0) - (Input.GetKey(RKeyDown) ? 1.0f : 0);
+        jRight = (Input.GetKey(RKeyRight) ? 1.0f : 0) - (Input.GetKey(RKeyLeft) ? 1.0f : 0);
 
         if (inputEnabled==false)
         {

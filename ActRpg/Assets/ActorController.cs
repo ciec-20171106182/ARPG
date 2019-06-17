@@ -11,6 +11,7 @@ public class ActorController : MonoBehaviour
     public float junmVelcity = 4.0f;
     public float rollVelicty = 1.0f;
     public float rollLimitSpeed =10.0f;
+    public float aniweight;
     [SerializeField]
     private Animator anim;
     private Rigidbody rigi;
@@ -93,5 +94,14 @@ public class ActorController : MonoBehaviour
     public void isNotGound()
     {
         anim.SetBool("isGound", false);
+    }
+    public void onattackidle()
+    {
+        anim.SetLayerWeight(anim.GetLayerIndex("attack"), 0);
+
+    }
+    public void onattack1a()
+    {
+        anim.SetLayerWeight(anim.GetLayerIndex("attack"), 1);
     }
 }
