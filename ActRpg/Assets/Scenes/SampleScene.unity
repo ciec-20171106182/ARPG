@@ -742,7 +742,7 @@ MonoBehaviour:
   runspeed: 4
   junmVelcity: 7
   rollVelicty: 1.3
-  rollLimitSpeed: 12
+  rollLimitSpeed: 5
   aniweight: 0
   anim: {fileID: 0}
 --- !u!54 &1312936339

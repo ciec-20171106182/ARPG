@@ -18,6 +18,7 @@ public class ActorController : MonoBehaviour
     private Vector3 movingVec;
     private Vector3 upThrustVec;
     private Vector3 forwardThrustVec;
+    private bool canAttack;
     // Start is called before the first frame update
     void Awake()
     {
@@ -37,16 +38,17 @@ public class ActorController : MonoBehaviour
             if (pi.run)
             {
                 anim.SetTrigger("run_jump");
-
+                
             }
                
         }
         if (pi.jump)
         {
             anim.SetTrigger("roll");
+            canAttack = false;
         }
 
-        if(pi.attack)
+        if(pi.attack&&checkState("ground")&&canAttack)
         {
             anim.SetTrigger("attack");
         }
@@ -70,7 +72,12 @@ public class ActorController : MonoBehaviour
         forwardThrustVec = Vector3.zero;
     }
 
-
+    private bool checkState(string stateName,string layerName="Base Layer")
+    {
+        int layerIndex = anim.GetLayerIndex(layerName);
+        bool result = anim.GetCurrentAnimatorStateInfo(layerIndex).IsName(stateName);
+        return result; 
+    }
 
 
     public void onenterRun_jump()
@@ -84,12 +91,17 @@ public class ActorController : MonoBehaviour
     }
     public void onRoll()
     {
-
+        canAttack = false;
         forwardThrustVec = new Vector3(0, rollVelicty, 0);//给一个向前的冲量，使人物翻滚更流畅。
+    }
+    public void onGroundEnter()
+    {
+        canAttack = true;
     }
     public void isGound()
     {
         anim.SetBool("isGound", true);
+        
     }
     public void isNotGound()
     {
@@ -97,11 +109,17 @@ public class ActorController : MonoBehaviour
     }
     public void onattackidle()
     {
+        pi.inputEnabled = true;
         anim.SetLayerWeight(anim.GetLayerIndex("attack"), 0);
 
     }
-    public void onattack1a()
+    public void onattack1aEnter()
     {
-        anim.SetLayerWeight(anim.GetLayerIndex("attack"), 1);
+        pi.inputEnabled = false;
+        anim.SetLayerWeight(anim.GetLayerIndex("attack"), 1.0f);
+    }
+    public void onattackUpdata()
+    {
+        forwardThrustVec = model.transform.forward * anim.GetFloat("attackVelocity");
     }
 }

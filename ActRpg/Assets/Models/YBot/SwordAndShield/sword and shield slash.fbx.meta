@@ -192,7 +192,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves:
-      - name: attackVelocity
+      - name: attack1aVeiocity
         curve:
           serializedVersion: 2
           curve:
