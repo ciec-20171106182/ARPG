@@ -11,7 +11,8 @@ public class ActorController : MonoBehaviour
     public float junmVelcity = 4.0f;
     public float rollVelicty = 1.0f;
     public float rollLimitSpeed =10.0f;
-    public float aniweight;
+    public PhysicMaterial PhysicMaterialOne;
+    public PhysicMaterial PhysicMaterialZero;
     [SerializeField]
     private Animator anim;
     private Rigidbody rigi;
@@ -19,12 +20,14 @@ public class ActorController : MonoBehaviour
     private Vector3 upThrustVec;
     private Vector3 forwardThrustVec;
     private bool canAttack;
+    private CapsuleCollider col;
     // Start is called before the first frame update
     void Awake()
     {
         pi = GetComponent<PlayerInput>();
         anim = model.GetComponent<Animator>();
         rigi =GetComponent<Rigidbody>();
+        col = GetComponent<CapsuleCollider>();
     }
 
     // Update is called once per frame
@@ -97,6 +100,11 @@ public class ActorController : MonoBehaviour
     public void onGroundEnter()
     {
         canAttack = true;
+        col.material = PhysicMaterialOne;
+    }
+    public void onGroundExit()
+    {
+        col.material = PhysicMaterialZero;
     }
     public void isGound()
     {
