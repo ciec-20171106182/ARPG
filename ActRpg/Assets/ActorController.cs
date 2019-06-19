@@ -21,6 +21,10 @@ public class ActorController : MonoBehaviour
     private Vector3 forwardThrustVec;
     private bool canAttack;
     private CapsuleCollider col;
+    private float lerpTarget;
+    private Vector3 deltaPos;
+
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -34,7 +38,7 @@ public class ActorController : MonoBehaviour
     void Update()
     {
         float targetRunMunlti= ((pi.run) ? 2.0f : 1.0f);
-        anim.SetFloat("forword", pi.Dmag * Mathf.Lerp(anim.GetFloat("forword"),targetRunMunlti,0.3f));//减缓站立动画或走路动画切换到奔跑动画的速度
+        anim.SetFloat("forword", pi.Dmag * Mathf.Lerp(anim.GetFloat("forword"),targetRunMunlti,0.1f));//减缓站立动画或走路动画切换到奔跑动画的速度
 
        if(pi.jump)
         {
@@ -70,9 +74,11 @@ public class ActorController : MonoBehaviour
     private void FixedUpdate()
     {
         //rigi.position += movingVec * Time.fixedDeltaTime;
+        rigi.position += deltaPos;
         rigi.velocity = new Vector3(movingVec.x, rigi.velocity.y, movingVec.z)+upThrustVec+forwardThrustVec;
         upThrustVec = Vector3.zero;
         forwardThrustVec = Vector3.zero;
+        deltaPos = Vector3.zero;
     }
 
     private bool checkState(string stateName,string layerName="Base Layer")
@@ -115,19 +121,38 @@ public class ActorController : MonoBehaviour
     {
         anim.SetBool("isGound", false);
     }
-    public void onattackidle()
+    public void onattackidleEnter()
     {
         pi.inputEnabled = true;
-        anim.SetLayerWeight(anim.GetLayerIndex("attack"), 0);
+       // anim.SetLayerWeight(anim.GetLayerIndex("attack"), 0);
+        lerpTarget = 0f;
 
+    }
+    public void onattackidleUpdate()
+    {
+        float currentWeight = anim.GetLayerWeight(anim.GetLayerIndex("attack"));
+        currentWeight = Mathf.Lerp(currentWeight, lerpTarget, 0.1f);
+        anim.SetLayerWeight(anim.GetLayerIndex("attack"), currentWeight);
     }
     public void onattack1aEnter()
     {
         pi.inputEnabled = false;
-        anim.SetLayerWeight(anim.GetLayerIndex("attack"), 1.0f);
+        lerpTarget = 1.0f;
+       
     }
     public void onattackUpdata()
     {
         forwardThrustVec = model.transform.forward * anim.GetFloat("attackVelocity");
+        float currentWeight = anim.GetLayerWeight(anim.GetLayerIndex("attack"));
+        currentWeight = Mathf.Lerp(currentWeight, lerpTarget, 0.1f);
+        anim.SetLayerWeight(anim.GetLayerIndex("attack"), currentWeight);
+    }
+    public void onUpdateRootMove(object deltaPos2)
+    {
+        if(checkState("attack1c","attack"))
+        {
+            deltaPos +=(Vector3) deltaPos2;
+        }
+        
     }
 }
