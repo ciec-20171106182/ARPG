@@ -38,9 +38,19 @@ public class ActorController : MonoBehaviour
     void Update()
     {
         float targetRunMunlti= ((pi.run) ? 2.0f : 1.0f);
-        anim.SetFloat("forword", pi.Dmag * Mathf.Lerp(anim.GetFloat("forword"),targetRunMunlti,0.1f));//减缓站立动画或走路动画切换到奔跑动画的速度
+        anim.SetFloat("forword", pi.Dmag * Mathf.Lerp(anim.GetFloat("forword"),targetRunMunlti,0.5f));//减缓站立动画或走路动画切换到奔跑动画的速度
 
-       if(pi.jump)
+
+        if(pi.defenseOn&& canAttack)
+        {
+            anim.SetBool("defense", true);
+        }
+        if (pi.defenseOff && canAttack)
+        {
+            anim.SetBool("defense", false);
+        }
+
+        if (pi.jump)
         {
             if (pi.run)
             {
@@ -49,6 +59,7 @@ public class ActorController : MonoBehaviour
             }
                
         }
+       
         if (pi.jump)
         {
             anim.SetTrigger("roll");
@@ -79,6 +90,7 @@ public class ActorController : MonoBehaviour
         upThrustVec = Vector3.zero;
         forwardThrustVec = Vector3.zero;
         deltaPos = Vector3.zero;
+         
     }
 
     private bool checkState(string stateName,string layerName="Base Layer")

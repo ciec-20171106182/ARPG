@@ -15,6 +15,7 @@ public class PlayerInput : MonoBehaviour
     public string KeyD;
     public float Dup;
     public float Dright;
+    
 
     public float Dmag;
     public float jUp;
@@ -28,11 +29,15 @@ public class PlayerInput : MonoBehaviour
     
     public bool run = false;
     public bool jump=false;
+    public bool defenseOn = false;
+    public bool defenseOff = true;
     private bool lastjump;
     public bool attack = false;
     private bool lastattack;
     [Header("Other")]
     public bool inputEnabled = true;
+    public float MouseSensibility=1.0f;
+
 
 
     private float targetDup;
@@ -52,9 +57,10 @@ public class PlayerInput : MonoBehaviour
     {
         targetDup = (Input.GetKey(KeyUp) ? 1.0f : 0) - (Input.GetKey(KeyDown) ? 1.0f : 0);
         targetDright = (Input.GetKey(KeyRight) ? 1.0f : 0) - (Input.GetKey(KeyLeft) ? 1.0f : 0);
-        jUp = (Input.GetKey(RKeyUp) ? 1.0f : 0) - (Input.GetKey(RKeyDown) ? 1.0f : 0);
-        jRight = (Input.GetKey(RKeyRight) ? 1.0f : 0) - (Input.GetKey(RKeyLeft) ? 1.0f : 0);
-
+        //jUp = (Input.GetKey(RKeyUp) ? 1.0f : 0) - (Input.GetKey(RKeyDown) ? 1.0f : 0);
+        //jRight = (Input.GetKey(RKeyRight) ? 1.0f : 0) - (Input.GetKey(RKeyLeft) ? 1.0f : 0);
+        jUp = Input.GetAxis("Mouse Y")*MouseSensibility;
+        jRight = Input.GetAxis("Mouse X")*MouseSensibility;
         if (inputEnabled==false)
         {
             targetDright = 0;
@@ -70,7 +76,9 @@ public class PlayerInput : MonoBehaviour
         Dvec = Dright2 * transform.right + Dup2 * transform.forward;
 
         run = Input.GetKey(KeyA);
-        
+
+        defenseOn = Input.GetKeyDown(KeyD);
+        defenseOff = Input.GetKeyUp(KeyD);
         bool newjump = Input.GetKey(KeyB);
         
         if (newjump!=lastjump&&newjump==true)
