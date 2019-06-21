@@ -13,6 +13,7 @@ public class PlayerInput : MonoBehaviour
     public string KeyB;
     public string KeyC;
     public string KeyD;
+    public string keyE;
     public float Dup;
     public float Dright;
     
@@ -31,6 +32,7 @@ public class PlayerInput : MonoBehaviour
     public bool jump=false;
     public bool defenseOn = false;
     public bool defenseOff = true;
+    public bool LockOn = false;
     private bool lastjump;
     public bool attack = false;
     private bool lastattack;
@@ -74,7 +76,8 @@ public class PlayerInput : MonoBehaviour
 
         Dmag = Mathf.Sqrt((Dup2 * Dup2) + (Dright2 * Dright2));
         Dvec = Dright2 * transform.right + Dup2 * transform.forward;
-
+        LockOn = Input.GetKeyDown(keyE);
+        
         run = Input.GetKey(KeyA);
 
         defenseOn = Input.GetKeyDown(KeyD);
@@ -111,6 +114,7 @@ public class PlayerInput : MonoBehaviour
         output.x = input.x * Mathf.Sqrt(1 - (input.y * input.y) / 2.0f);
         output.y = input.y * Mathf.Sqrt(1 - (input.x * input.x) / 2.0f);
         return output;
+        
     }
 
 }

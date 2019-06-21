@@ -6,6 +6,7 @@ public class ActorController : MonoBehaviour
 {
     public GameObject model;
     public PlayerInput pi;
+    public cameraController cemer; 
     public float walkspeed=1.4f;
     public float runspeed = 2.7f;
     public float junmVelcity = 4.0f;
@@ -32,11 +33,16 @@ public class ActorController : MonoBehaviour
         anim = model.GetComponent<Animator>();
         rigi =GetComponent<Rigidbody>();
         col = GetComponent<CapsuleCollider>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (pi.LockOn)
+        {
+            cemer.lockUNLock();
+        }
         float targetRunMunlti= ((pi.run) ? 2.0f : 1.0f);
         anim.SetFloat("forword", pi.Dmag * Mathf.Lerp(anim.GetFloat("forword"),targetRunMunlti,0.5f));//减缓站立动画或走路动画切换到奔跑动画的速度
 
@@ -70,17 +76,28 @@ public class ActorController : MonoBehaviour
         {
             anim.SetTrigger("attack");
         }
-        if (pi.Dmag>0.1f)
+        if(cemer.lockState==false)
         {
-            Vector3 targetForward = Vector3.Slerp(model.transform.forward, pi.Dvec, 0.3f);//球形线性插值，减缓旋转速度
-            model.transform.forward = targetForward;
+            if (pi.Dmag > 0.1f)
+            {
+                Vector3 targetForward = Vector3.Slerp(model.transform.forward, pi.Dvec, 0.3f);//球形线性插值，减缓旋转速度
+                model.transform.forward = targetForward;
+            }
+            movingVec = pi.Dmag * model.transform.forward * walkspeed * ((pi.run) ? runspeed : 1.0f);
+
         }
+        else
+        {
+            model.transform.forward = transform.forward;
+            movingVec=pi.Dvec* walkspeed * ((pi.run) ? runspeed : 1.0f);
+        }
+       
         if(rigi.velocity.magnitude>rollLimitSpeed)
         {
             anim.SetTrigger("limitRoll");
         }
         
-        movingVec = pi.Dmag * model.transform.forward * walkspeed * ((pi.run) ? runspeed : 1.0f);
+        
     }
     private void FixedUpdate()
     {
@@ -132,6 +149,7 @@ public class ActorController : MonoBehaviour
     public void isNotGound()
     {
         anim.SetBool("isGound", false);
+        
     }
     public void onattackidleEnter()
     {
