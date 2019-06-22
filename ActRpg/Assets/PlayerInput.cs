@@ -14,6 +14,7 @@ public class PlayerInput : MonoBehaviour
     public string KeyC;
     public string KeyD;
     public string keyE;
+    public string keyF;
     public float Dup;
     public float Dright;
     
@@ -35,6 +36,7 @@ public class PlayerInput : MonoBehaviour
     public bool LockOn = false;
     private bool lastjump;
     public bool attack = false;
+    public bool shiedHit=false;
     private bool lastattack;
     [Header("Other")]
     public bool inputEnabled = true;
@@ -47,6 +49,7 @@ public class PlayerInput : MonoBehaviour
     
     private float velocityDup;
     private float velocityDright;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -75,10 +78,12 @@ public class PlayerInput : MonoBehaviour
         float Dright2 = tempDaxis.y;
 
         Dmag = Mathf.Sqrt((Dup2 * Dup2) + (Dright2 * Dright2));
-        Dvec = Dright2 * transform.right + Dup2 * transform.forward;
+        Dvec = Dright2 * transform.right + Dup2 *transform.forward;
         LockOn = Input.GetKeyDown(keyE);
         
         run = Input.GetKey(KeyA);
+
+        shiedHit = Input.GetKeyDown(keyF);
 
         defenseOn = Input.GetKeyDown(KeyD);
         defenseOff = Input.GetKeyUp(KeyD);

@@ -9,13 +9,16 @@ public class cameraController : MonoBehaviour
     public float Horizontalspeed=100.0f;
     public Image lockDot;
     public bool lockState;
+    public Vector3 lockDirection;
+
     private GameObject Player;
     private GameObject CameraHandle;
     private float tempEulerX;
     private GameObject model;
     private GameObject camerapos;
     private Vector3 cameravocity;
-    private GameObject LockTarget=null;
+    private LockTerget lockTarget;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -29,12 +32,29 @@ public class cameraController : MonoBehaviour
         lockState = false;
         Cursor.lockState = CursorLockMode.Locked;
             }
-
+    private void Update()
+    {
+        if (lockTarget != null)
+        {
+            lockDot.rectTransform.position = Camera.main.WorldToScreenPoint(lockTarget.obj.transform.position);
+        
+            if (Vector3.Distance(model.transform.position,lockTarget.obj.transform.position)>10.0f)
+            {
+                 lockTarget = null;
+               
+                lockDot.enabled = false;
+                lockState = false;
+            }
+        }
+        
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (LockTarget==null)
+        if (lockTarget==null)
         {
+
+
             Vector3 tempModelEuler = model.transform.eulerAngles;
             Player.transform.Rotate(Vector3.up, pi.jRight * Time.fixedDeltaTime * Horizontalspeed);
             tempEulerX -= pi.jUp * 80.0f * Time.fixedDeltaTime;
@@ -45,10 +65,12 @@ public class cameraController : MonoBehaviour
         else
         {
             //CameraHandle.transform.LookAt(LockTarget.transform);
-            Vector3 tempForward = LockTarget.transform.position - transform.position;
+            Vector3 tempForward = lockTarget.obj.transform.position - transform.position;
+            lockDirection= lockTarget.obj.transform.position - model.transform.position;
+            lockDirection.y = 0;
             tempForward.y = 0;
             CameraHandle.transform.forward = tempForward;
-
+            CameraHandle.transform.LookAt(lockTarget.obj.transform);
         }
         
 
@@ -61,36 +83,43 @@ public class cameraController : MonoBehaviour
         
             Vector3 medolOrigin = model.transform.position;
             Vector3 modleOrigin1 = medolOrigin + new Vector3(0, 1, 0);
-            Vector3 boxCenter = modleOrigin1 + transform.forward * 5.0f;
+            Vector3 boxCenter = modleOrigin1 + model.transform.forward * 5.0f;
             Collider[] col = Physics.OverlapBox(boxCenter, new Vector3(0.5f, 0.5f, 5.0f),model.transform.rotation,LayerMask.GetMask("enemy"));
+            
             if (col.Length==0)
             {
                 
-                LockTarget = null;
+                lockTarget= null;
             }
             else
             {
                 foreach (var item in col)
                 {
-                    if (LockTarget==item.gameObject)
+                    if (lockTarget!=null && lockTarget.obj==item.gameObject)
                     {
-                        LockTarget = null;
-                        lockDot.enabled = false;
-                        print("clear" + LockTarget);
+                        lockTarget = null;
+                        lockDot.enabled = false;                        
                         lockState = false;
                         break;
                         
                     }
-                    LockTarget =item.gameObject;
+                lockTarget= new LockTerget(item.gameObject);
                     lockDot.enabled = true;
                     lockState = true;
-                    print("锁定" + LockTarget);
+                    
 
                     break;
                 }
-
             }
-            
-        
+     
+    }
+    public class LockTerget
+    {
+        public GameObject obj;
+        public float halfHight;
+        public LockTerget(GameObject tobj)
+        {
+            obj = tobj;
+        }
     }
 }

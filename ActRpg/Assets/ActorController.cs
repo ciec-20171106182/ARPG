@@ -6,12 +6,12 @@ public class ActorController : MonoBehaviour
 {
     public GameObject model;
     public PlayerInput pi;
-    public cameraController cemer; 
-    public float walkspeed=1.4f;
+    public cameraController cemer;
+    public float walkspeed = 1.4f;
     public float runspeed = 2.7f;
     public float junmVelcity = 4.0f;
     public float rollVelicty = 1.0f;
-    public float rollLimitSpeed =10.0f;
+    public float rollLimitSpeed = 10.0f;
     public PhysicMaterial PhysicMaterialOne;
     public PhysicMaterial PhysicMaterialZero;
     [SerializeField]
@@ -24,6 +24,7 @@ public class ActorController : MonoBehaviour
     private CapsuleCollider col;
     private float lerpTarget;
     private Vector3 deltaPos;
+    private bool tackDirection ;
 
 
     // Start is called before the first frame update
@@ -31,9 +32,9 @@ public class ActorController : MonoBehaviour
     {
         pi = GetComponent<PlayerInput>();
         anim = model.GetComponent<Animator>();
-        rigi =GetComponent<Rigidbody>();
+        rigi = GetComponent<Rigidbody>();
         col = GetComponent<CapsuleCollider>();
-        
+
     }
 
     // Update is called once per frame
@@ -43,11 +44,22 @@ public class ActorController : MonoBehaviour
         {
             cemer.lockUNLock();
         }
-        float targetRunMunlti= ((pi.run) ? 2.0f : 1.0f);
-        anim.SetFloat("forword", pi.Dmag * Mathf.Lerp(anim.GetFloat("forword"),targetRunMunlti,0.5f));//减缓站立动画或走路动画切换到奔跑动画的速度
+        float targetRunMunlti = ((pi.run) ? 2.0f : 1.0f);
+        if (cemer.lockState == false)
+        {
+            anim.SetFloat("forword", pi.Dmag * Mathf.Lerp(anim.GetFloat("forword"), targetRunMunlti, 0.5f));
+            anim.SetFloat("right", 0);
+        }
+        else
+        {
+            Vector3 localDvec = transform.InverseTransformDirection(pi.Dvec);
+            anim.SetFloat("forword", localDvec.z * targetRunMunlti);
+            anim.SetFloat("right", localDvec.x * targetRunMunlti);
+        }
+        //anim.SetFloat("forword", pi.Dmag * Mathf.Lerp(anim.GetFloat("forword"),targetRunMunlti,0.5f));//减缓站立动画或走路动画切换到奔跑动画的速度
 
 
-        if(pi.defenseOn&& canAttack)
+        if (pi.defenseOn && canAttack)
         {
             anim.SetBool("defense", true);
         }
@@ -60,23 +72,38 @@ public class ActorController : MonoBehaviour
         {
             if (pi.run)
             {
-                anim.SetTrigger("run_jump");
                 
+                    anim.SetTrigger("run_jump");
+                
+                
+
             }
-               
+
         }
-       
+
         if (pi.jump)
         {
             anim.SetTrigger("roll");
             canAttack = false;
         }
 
-        if(pi.attack&&checkState("ground")&&canAttack)
+        if ((pi||pi.shiedHit) && (checkState("ground")||checkStateTag("attack")) && canAttack)
         {
-            anim.SetTrigger("attack");
+            if(pi.shiedHit)
+            {
+                anim.SetBool("Right0Lift1",true);
+                print("dun hit");
+                anim.SetTrigger("attack");
+                
+            }
+            else if(pi.attack)
+            {
+                anim.SetBool("Right0Lift1", false);
+                print("hit");
+                anim.SetTrigger("attack");
+            }   
         }
-        if(cemer.lockState==false)
+        if (cemer.lockState == false)
         {
             if (pi.Dmag > 0.1f)
             {
@@ -84,53 +111,62 @@ public class ActorController : MonoBehaviour
                 model.transform.forward = targetForward;
             }
             movingVec = pi.Dmag * model.transform.forward * walkspeed * ((pi.run) ? runspeed : 1.0f);
-
+            
         }
         else
         {
+            transform.forward = cemer.lockDirection;
             model.transform.forward = transform.forward;
-            movingVec=pi.Dvec* walkspeed * ((pi.run) ? runspeed : 1.0f);
+            movingVec = pi.Dvec * walkspeed * ((pi.run) ? runspeed : 1.0f);
         }
-       
-        if(rigi.velocity.magnitude>rollLimitSpeed)
+
+        if (rigi.velocity.magnitude > rollLimitSpeed)
         {
             anim.SetTrigger("limitRoll");
         }
-        
-        
+        //print("当前动画状态为：" + anim.GetCurrentAnimatorClipInfo(0)[0].clip.name);
+
     }
     private void FixedUpdate()
     {
         //rigi.position += movingVec * Time.fixedDeltaTime;
         rigi.position += deltaPos;
-        rigi.velocity = new Vector3(movingVec.x, rigi.velocity.y, movingVec.z)+upThrustVec+forwardThrustVec;
+        rigi.velocity = new Vector3(movingVec.x, rigi.velocity.y, movingVec.z) + upThrustVec + forwardThrustVec;
         upThrustVec = Vector3.zero;
         forwardThrustVec = Vector3.zero;
         deltaPos = Vector3.zero;
-         
+
     }
 
-    private bool checkState(string stateName,string layerName="Base Layer")
+    private bool checkState(string stateName, string layerName = "Base Layer")
     {
         int layerIndex = anim.GetLayerIndex(layerName);
         bool result = anim.GetCurrentAnimatorStateInfo(layerIndex).IsName(stateName);
-        return result; 
+        return result;
+    }
+    private bool checkStateTag(string tagName, string layerName = "Base Layer")
+    {
+        int layerIndex = anim.GetLayerIndex(layerName);
+        bool result = anim.GetCurrentAnimatorStateInfo(layerIndex).IsTag(tagName);
+        return result;
     }
 
 
     public void onenterRun_jump()
     {
-       
+
         upThrustVec = new Vector3(0, junmVelcity, 0);//给一个向上的冲量，使人物跳起。
+        tackDirection = true;
     }
     public void onexitRun_jump()
     {
-        
+
     }
     public void onRoll()
     {
         canAttack = false;
-        forwardThrustVec = new Vector3(0, rollVelicty, 0);//给一个向前的冲量，使人物翻滚更流畅。
+        forwardThrustVec = new Vector3(0, rollVelicty, 0);//给一个up的冲量，使人物翻滚更流畅。
+        tackDirection = true;
     }
     public void onGroundEnter()
     {
@@ -144,45 +180,38 @@ public class ActorController : MonoBehaviour
     public void isGound()
     {
         anim.SetBool("isGound", true);
-        
+
     }
     public void isNotGound()
     {
         anim.SetBool("isGound", false);
-        
+
     }
     public void onattackidleEnter()
     {
         pi.inputEnabled = true;
-       // anim.SetLayerWeight(anim.GetLayerIndex("attack"), 0);
-        lerpTarget = 0f;
-
+        // anim.SetLayerWeight(anim.GetLayerIndex("attack"), 0);
+        //lerpTarget = 0f;
     }
-    public void onattackidleUpdate()
-    {
-        float currentWeight = anim.GetLayerWeight(anim.GetLayerIndex("attack"));
-        currentWeight = Mathf.Lerp(currentWeight, lerpTarget, 0.1f);
-        anim.SetLayerWeight(anim.GetLayerIndex("attack"), currentWeight);
-    }
+   
     public void onattack1aEnter()
     {
         pi.inputEnabled = false;
-        lerpTarget = 1.0f;
-       
+       // lerpTarget = 1.0f;
     }
     public void onattackUpdata()
     {
         forwardThrustVec = model.transform.forward * anim.GetFloat("attackVelocity");
-        float currentWeight = anim.GetLayerWeight(anim.GetLayerIndex("attack"));
-        currentWeight = Mathf.Lerp(currentWeight, lerpTarget, 0.1f);
-        anim.SetLayerWeight(anim.GetLayerIndex("attack"), currentWeight);
+       //  float currentWeight = anim.GetLayerWeight(anim.GetLayerIndex("attack"));
+       // currentWeight = Mathf.Lerp(currentWeight, lerpTarget, 0.1f);
+       // anim.SetLayerWeight(anim.GetLayerIndex("attack"), currentWeight);
     }
     public void onUpdateRootMove(object deltaPos2)
     {
-        if(checkState("attack1c","attack"))
+        if (checkState("attack1c"))
         {
-            deltaPos +=(Vector3) deltaPos2;
+            deltaPos += (Vector3)deltaPos2;
         }
-        
     }
+   
 }
