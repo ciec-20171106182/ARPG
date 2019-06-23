@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInput : MonoBehaviour
+public class PlayerInput : GameConTrollerInput
 {
+
     [Header("Key Setting")]
     public string KeyUp = "w";
     public string KeyDown = "s";
@@ -15,46 +16,12 @@ public class PlayerInput : MonoBehaviour
     public string KeyD;
     public string keyE;
     public string keyF;
-    public float Dup;
-    public float Dright;
-    
-
-    public float Dmag;
-    public float jUp;
-    public float jRight;
-    public Vector3 Dvec;
-    public string RKeyUp;
-    public string RKeyDown;
-    public string RKeyRight;
-    public string RKeyLeft;
-    [Header("Output signal")]
-    
-    public bool run = false;
-    public bool jump=false;
-    public bool defenseOn = false;
-    public bool defenseOff = true;
-    public bool LockOn = false;
-    private bool lastjump;
-    public bool attack = false;
-    public bool shiedHit=false;
-    private bool lastattack;
-    [Header("Other")]
-    public bool inputEnabled = true;
-    public float MouseSensibility=1.0f;
-
-
-
-    private float targetDup;
-    private float targetDright;
-    
-    private float velocityDup;
-    private float velocityDright;
     
 
     // Start is called before the first frame update
     void Start()
     {
-
+        LockOn = false;
     }
 
     // Update is called once per frame

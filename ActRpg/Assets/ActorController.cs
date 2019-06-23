@@ -5,7 +5,7 @@ using UnityEngine;
 public class ActorController : MonoBehaviour
 {
     public GameObject model;
-    public PlayerInput pi;
+    public GameConTrollerInput pi;
     public cameraController cemer;
     public float walkspeed = 1.4f;
     public float runspeed = 2.7f;
@@ -24,22 +24,23 @@ public class ActorController : MonoBehaviour
     private CapsuleCollider col;
     private float lerpTarget;
     private Vector3 deltaPos;
-    private bool tackDirection ;
+    //private bool tackDirection ;
 
 
     // Start is called before the first frame update
     void Awake()
     {
-        pi = GetComponent<PlayerInput>();
+        pi = GetComponent<GameConTrollerInput>();
         anim = model.GetComponent<Animator>();
         rigi = GetComponent<Rigidbody>();
         col = GetComponent<CapsuleCollider>();
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         if (pi.LockOn)
         {
             cemer.lockUNLock();
@@ -87,19 +88,19 @@ public class ActorController : MonoBehaviour
             canAttack = false;
         }
 
-        if ((pi||pi.shiedHit) && (checkState("ground")||checkStateTag("attack")) && canAttack)
+        if ((pi.attack||pi.shiedHit) && (checkState("ground")||checkStateTag("attack")) && canAttack)
         {
-            if(pi.shiedHit)
+           if(pi.shiedHit)
             {
                 anim.SetBool("Right0Lift1",true);
-                print("dun hit");
+
                 anim.SetTrigger("attack");
                 
             }
-            else if(pi.attack)
+             if(pi.attack)
             {
                 anim.SetBool("Right0Lift1", false);
-                print("hit");
+                
                 anim.SetTrigger("attack");
             }   
         }
@@ -156,7 +157,7 @@ public class ActorController : MonoBehaviour
     {
 
         upThrustVec = new Vector3(0, junmVelcity, 0);//给一个向上的冲量，使人物跳起。
-        tackDirection = true;
+        //tackDirection = true;
     }
     public void onexitRun_jump()
     {
@@ -166,7 +167,7 @@ public class ActorController : MonoBehaviour
     {
         canAttack = false;
         forwardThrustVec = new Vector3(0, rollVelicty, 0);//给一个up的冲量，使人物翻滚更流畅。
-        tackDirection = true;
+       // tackDirection = true;
     }
     public void onGroundEnter()
     {
@@ -198,6 +199,10 @@ public class ActorController : MonoBehaviour
     {
         pi.inputEnabled = false;
        // lerpTarget = 1.0f;
+    }
+    public void onBeHitEnter()
+    {
+        pi.inputEnabled = false;
     }
     public void onattackUpdata()
     {

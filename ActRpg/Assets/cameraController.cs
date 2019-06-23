@@ -5,11 +5,12 @@ using UnityEngine.UI;
 
 public class cameraController : MonoBehaviour
 {
-    public PlayerInput pi;
+    public GameConTrollerInput pi;
     public float Horizontalspeed=100.0f;
     public Image lockDot;
     public bool lockState;
     public Vector3 lockDirection;
+    public bool isAI;
 
     private GameObject Player;
     private GameObject CameraHandle;
@@ -27,22 +28,29 @@ public class cameraController : MonoBehaviour
         Player = CameraHandle.transform.parent.gameObject;
         tempEulerX = 20;
         model = Player.GetComponent<ActorController>().model;
-        camerapos = Camera.main.gameObject;
-        lockDot.enabled = false;
+        if (!isAI)
+        {
+            camerapos = Camera.main.gameObject;
+            lockDot.enabled = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        
         lockState = false;
-        Cursor.lockState = CursorLockMode.Locked;
+       
             }
     private void Update()
     {
         if (lockTarget != null)
         {
-            lockDot.rectTransform.position = Camera.main.WorldToScreenPoint(lockTarget.obj.transform.position);
+            lockDot.rectTransform.position = Camera.main.WorldToScreenPoint(lockTarget.obj.transform.position+new Vector3(0,0.8f,0));
         
             if (Vector3.Distance(model.transform.position,lockTarget.obj.transform.position)>10.0f)
             {
                  lockTarget = null;
-               
-                lockDot.enabled = false;
+                if (!isAI)
+                {
+                    lockDot.enabled = false;
+                }
                 lockState = false;
             }
         }
@@ -55,12 +63,17 @@ public class cameraController : MonoBehaviour
         {
 
 
-            Vector3 tempModelEuler = model.transform.eulerAngles;
-            Player.transform.Rotate(Vector3.up, pi.jRight * Time.fixedDeltaTime * Horizontalspeed);
-            tempEulerX -= pi.jUp * 80.0f * Time.fixedDeltaTime;
-            tempEulerX = Mathf.Clamp(tempEulerX, -30, 40);
-            CameraHandle.transform.localEulerAngles = new Vector3(tempEulerX, 0, 0);
-            model.transform.eulerAngles = tempModelEuler;
+            
+            if (!isAI)
+            {
+                Player.transform.Rotate(Vector3.up, pi.jRight * Time.fixedDeltaTime * Horizontalspeed);
+
+                Vector3 tempModelEuler = model.transform.eulerAngles;
+                tempEulerX -= pi.jUp * 80.0f * Time.fixedDeltaTime;
+                tempEulerX = Mathf.Clamp(tempEulerX, -30, 40);
+                CameraHandle.transform.localEulerAngles = new Vector3(tempEulerX, 0, 0);
+                model.transform.eulerAngles = tempModelEuler;
+            }
         }
         else
         {
@@ -72,11 +85,14 @@ public class cameraController : MonoBehaviour
             CameraHandle.transform.forward = tempForward;
             CameraHandle.transform.LookAt(lockTarget.obj.transform);
         }
-        
 
-        camerapos.transform.position = Vector3.SmoothDamp(camerapos.transform.position, transform.position, ref cameravocity, 0.1f);
-        //camerapos.transform.eulerAngles = transform.eulerAngles;
-        camerapos.transform.LookAt(CameraHandle.transform);
+        if (!isAI)
+        {
+            camerapos.transform.position = Vector3.SmoothDamp(camerapos.transform.position, transform.position, ref cameravocity, 0.1f);
+            //camerapos.transform.eulerAngles = transform.eulerAngles;
+            camerapos.transform.LookAt(CameraHandle.transform);
+        }
+          
     }
     public void lockUNLock()
     {
@@ -84,7 +100,7 @@ public class cameraController : MonoBehaviour
             Vector3 medolOrigin = model.transform.position;
             Vector3 modleOrigin1 = medolOrigin + new Vector3(0, 1, 0);
             Vector3 boxCenter = modleOrigin1 + model.transform.forward * 5.0f;
-            Collider[] col = Physics.OverlapBox(boxCenter, new Vector3(0.5f, 0.5f, 5.0f),model.transform.rotation,LayerMask.GetMask("enemy"));
+            Collider[] col = Physics.OverlapBox(boxCenter, new Vector3(1f, 1f, 5.0f),model.transform.rotation,LayerMask.GetMask(isAI?"player":"enemy"));
             
             if (col.Length==0)
             {
@@ -98,8 +114,11 @@ public class cameraController : MonoBehaviour
                     if (lockTarget!=null && lockTarget.obj==item.gameObject)
                     {
                         lockTarget = null;
-                        lockDot.enabled = false;                        
-                        lockState = false;
+                    if (!isAI)
+                    {
+                        lockDot.enabled = false;
+                    }
+                    lockState = false;
                         break;
                         
                     }
