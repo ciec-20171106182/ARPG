@@ -765,6 +765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponCol: {fileID: 1433552271}
+  am: {fileID: 0}
 --- !u!4 &582833680 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400016, guid: 2f9d958fbcd96e44ca35a77a15e3187a,
@@ -1134,6 +1135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bm: {fileID: 0}
   ac: {fileID: 0}
+  wm: {fileID: 0}
 --- !u!136 &864191471
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1604,6 +1606,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponCol: {fileID: 765879171}
+  am: {fileID: 0}
 --- !u!1 &1312936336
 GameObject:
   m_ObjectHideFlags: 0
@@ -1654,8 +1657,8 @@ MonoBehaviour:
   model: {fileID: 1080124598}
   pi: {fileID: 1312936341}
   cemer: {fileID: 870340497}
-  walkspeed: 1.4
-  runspeed: 3.5
+  walkspeed: 3
+  runspeed: 2
   junmVelcity: 7
   rollVelicty: 2
   rollLimitSpeed: 5
@@ -1750,6 +1753,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bm: {fileID: 0}
   ac: {fileID: 0}
+  wm: {fileID: 0}
 --- !u!1 &1383224147
 GameObject:
   m_ObjectHideFlags: 0

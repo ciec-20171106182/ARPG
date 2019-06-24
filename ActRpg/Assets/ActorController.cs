@@ -167,6 +167,7 @@ public class ActorController : MonoBehaviour
     {
         canAttack = false;
         forwardThrustVec = new Vector3(0, rollVelicty, 0);//给一个up的冲量，使人物翻滚更流畅。
+        rigi.velocity = new Vector3(5.0f, rigi.velocity.y, 5.0f);
        // tackDirection = true;
     }
     public void onGroundEnter()

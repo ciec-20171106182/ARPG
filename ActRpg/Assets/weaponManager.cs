@@ -5,6 +5,7 @@ using UnityEngine;
 public class weaponManager : MonoBehaviour
 {
     public CapsuleCollider weaponCol;
+    public ActorManager am;
    //// Start is called before the first frame update
    void Start()
    {
