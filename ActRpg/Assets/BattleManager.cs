@@ -25,6 +25,10 @@ public class BattleManager : MonoBehaviour
     // }
     public void OnTriggerEnter(Collider col)
     {
-        print(col.name);
+        if (col.tag==("Weapon"))
+        {
+            am.doManager();
+            print("hit");
+        }
     }
 }

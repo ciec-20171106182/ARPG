@@ -218,5 +218,8 @@ public class ActorController : MonoBehaviour
             deltaPos += (Vector3)deltaPos2;
         }
     }
-   
+   public void isSueSetTrigger(string tiggerName)
+    {
+        anim.SetTrigger(tiggerName);
+    }
 }

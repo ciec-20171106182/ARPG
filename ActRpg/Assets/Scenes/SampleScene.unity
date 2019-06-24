@@ -752,6 +752,19 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5203825}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &546081468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546081462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dc558b80c211274bbea7caf41c48f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponCol: {fileID: 1433552271}
 --- !u!4 &582833680 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400016, guid: 2f9d958fbcd96e44ca35a77a15e3187a,
@@ -969,7 +982,7 @@ GameObject:
   - component: {fileID: 765879171}
   m_Layer: 10
   m_Name: Cylinder
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1060,6 +1073,7 @@ GameObject:
   - component: {fileID: 864191469}
   - component: {fileID: 864191468}
   - component: {fileID: 864191473}
+  - component: {fileID: 864191470}
   m_Layer: 11
   m_Name: enemyHandle
   m_TagString: Untagged
@@ -1106,6 +1120,20 @@ MonoBehaviour:
   PhysicMaterialOne: {fileID: 13400000, guid: 5b2c65ebc56f72541a911e9cf6b56e53, type: 2}
   PhysicMaterialZero: {fileID: 13400000, guid: b2790fcb30961944c8dc5bc1ca265ee7, type: 2}
   anim: {fileID: 0}
+--- !u!114 &864191470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864191467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 217bbc07670b8f34abae22c0f7c9b90d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bm: {fileID: 0}
+  ac: {fileID: 0}
 --- !u!136 &864191471
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1563,6 +1591,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Angles: {x: 0, y: -94, z: 24}
+--- !u!114 &1080124604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080124598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dc558b80c211274bbea7caf41c48f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponCol: {fileID: 765879171}
 --- !u!1 &1312936336
 GameObject:
   m_ObjectHideFlags: 0
@@ -1708,6 +1749,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bm: {fileID: 0}
+  ac: {fileID: 0}
 --- !u!1 &1383224147
 GameObject:
   m_ObjectHideFlags: 0
@@ -1875,7 +1917,7 @@ GameObject:
   - component: {fileID: 1433552271}
   m_Layer: 10
   m_Name: Cylinder
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

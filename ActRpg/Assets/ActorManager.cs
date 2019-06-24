@@ -5,9 +5,12 @@ using UnityEngine;
 public class ActorManager : MonoBehaviour
 {
     public BattleManager bm;
+    public ActorController ac;
     // Start is called before the first frame update
     void Awake()
     {
+        ac = GetComponent<ActorController>();
+
         GameObject sensor = transform.Find("Sensor").gameObject;
         bm = GetComponentInChildren<BattleManager>();
         if (bm==null)
@@ -21,5 +24,9 @@ public class ActorManager : MonoBehaviour
     void Update()
     {
         
+    }
+    public void doManager()
+    {
+        ac.isSueSetTrigger("beHit");
     }
 }

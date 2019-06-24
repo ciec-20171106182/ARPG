@@ -218,9 +218,23 @@ ModelImporter:
           postInfinity: 3
           rotationOrder: 4
       events:
+      - time: 0.39465877
+        functionName: weaponEnable
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.45906433
         functionName: ResetTigger
         data: attack
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.4935351
+        functionName: weaponDisable
+        data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
