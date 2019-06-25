@@ -35,6 +35,8 @@ public class ActorController : MonoBehaviour
         rigi = GetComponent<Rigidbody>();
         col = GetComponent<CapsuleCollider>();
         
+
+
     }
 
     // Update is called once per frame
