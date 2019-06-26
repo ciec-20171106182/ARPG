@@ -8,7 +8,7 @@ public class DunmmyInput : GameConTrollerInput
     // Start is called before the first frame update
     void Start()
     {
-        attack = true;
+        
     }
 
     // Update is called once per frame

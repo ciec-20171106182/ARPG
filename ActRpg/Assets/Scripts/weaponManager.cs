@@ -2,19 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class weaponManager : MonoBehaviour
+
+public class weaponManager :IActorManagerInterface
 {
-    public CapsuleCollider weaponCol;
-    public ActorManager am;
+    public CapsuleCollider weaponLCol;
+    public CapsuleCollider weaponRCol;
+  //  public ActorManager am;
+    
 
     public GameObject whLeft;
     public GameObject whRight;
    //// Start is called before the first frame update
    void Start()
    {
-        weaponCol.enabled = false;
-        weaponCol = whRight.GetComponentInChildren<CapsuleCollider>();
-
+        
+        weaponRCol = whRight.GetComponentInChildren<CapsuleCollider>();
+        weaponLCol = whLeft.GetComponentInChildren<CapsuleCollider>();
+        weaponRCol.enabled = false;
+        weaponLCol.enabled = false;
     }
    //
    //// Update is called once per frame
@@ -24,10 +29,13 @@ public class weaponManager : MonoBehaviour
    //}
    public void weaponEnable()
     {
-        weaponCol.enabled = true;
+        weaponRCol.enabled = true;
+
+        weaponLCol.enabled = true;
     }
     public void weaponDisable()
     {
-        weaponCol.enabled = false;
+        weaponRCol.enabled = false;
+        weaponLCol.enabled = false;
     }
 }

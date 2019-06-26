@@ -74,11 +74,8 @@ public class ActorController : MonoBehaviour
         if (pi.jump)
         {
             if (pi.run)
-            {
-                
+            {                
                     anim.SetTrigger("run_jump");
-                
-                
 
             }
 
@@ -141,13 +138,13 @@ public class ActorController : MonoBehaviour
 
     }
 
-    private bool checkState(string stateName, string layerName = "Base Layer")
+    public bool checkState(string stateName, string layerName = "Base Layer")
     {
         int layerIndex = anim.GetLayerIndex(layerName);
         bool result = anim.GetCurrentAnimatorStateInfo(layerIndex).IsName(stateName);
         return result;
     }
-    private bool checkStateTag(string tagName, string layerName = "Base Layer")
+    public bool checkStateTag(string tagName, string layerName = "Base Layer")
     {
         int layerIndex = anim.GetLayerIndex(layerName);
         bool result = anim.GetCurrentAnimatorStateInfo(layerIndex).IsTag(tagName);

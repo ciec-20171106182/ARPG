@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CapsuleCollider))]
-public class BattleManager : MonoBehaviour
+public class BattleManager : IActorManagerInterface
 {
-    public ActorManager am;
+    //public ActorManager am;
+    
     public CapsuleCollider defCol;
     // // Start is called before the first frame update
     void Start()
@@ -27,8 +28,10 @@ public class BattleManager : MonoBehaviour
     {
         if (col.tag==("Weapon"))
         {
-            am.doManager();
-            print("hit");
+            
+            am.tryDoManager();
+            print(col.name);
+            
         }
     }
 }

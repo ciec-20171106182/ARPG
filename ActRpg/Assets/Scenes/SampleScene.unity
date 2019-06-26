@@ -507,15 +507,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 310063170}
-  m_LocalRotation: {x: -0.100862235, y: -0.017360007, z: 0.012711808, w: 0.9946677}
-  m_LocalPosition: {x: -0.108, y: 0.102, z: 0.000000046034}
-  m_LocalScale: {x: 0.59670985, y: 0.036743555, z: 2.175621}
+  m_LocalRotation: {x: -0.20003968, y: -0.018546583, z: 0.010907988, w: 0.9795515}
+  m_LocalPosition: {x: -0.101, y: 0.035, z: -0.158}
+  m_LocalScale: {x: 0.59670985, y: 0.036743555, z: 0.5061365}
   m_Children: []
   m_Father: {fileID: 885983204}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -11.549001, y: -2.17, z: 1.6840001}
---- !u!65 &310063172
-BoxCollider:
+  m_LocalEulerAnglesHint: {x: -23.047, y: -2.535, z: 1.7930001}
+--- !u!136 &310063172
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -524,9 +524,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.5000001
+  m_Height: 1.0000002
+  m_Direction: 1
+  m_Center: {x: 0.00000011920929, y: -0.000011444092, z: -0.000000059604645}
 --- !u!23 &310063173
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -795,8 +796,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dc558b80c211274bbea7caf41c48f6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponCol: {fileID: 1433552271}
   am: {fileID: 0}
+  weaponLCol: {fileID: 0}
+  weaponRCol: {fileID: 0}
   whLeft: {fileID: 1027865844}
   whRight: {fileID: 221394379}
 --- !u!4 &582833680 stripped
@@ -1108,6 +1110,7 @@ GameObject:
   - component: {fileID: 864191468}
   - component: {fileID: 864191473}
   - component: {fileID: 864191470}
+  - component: {fileID: 864191474}
   m_Layer: 11
   m_Name: enemyHandle
   m_TagString: Untagged
@@ -1169,6 +1172,7 @@ MonoBehaviour:
   bm: {fileID: 0}
   ac: {fileID: 0}
   wm: {fileID: 0}
+  sm: {fileID: 0}
 --- !u!136 &864191471
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1227,10 +1231,35 @@ MonoBehaviour:
   defenseOn: 0
   defenseOff: 1
   LockOn: 0
-  attack: 0
-  shiedHit: 1
+  attack: 1
+  shiedHit: 0
   inputEnabled: 1
   MouseSensibility: 1
+--- !u!114 &864191474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864191467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83ed3e8bb774c4b4991b4146d9874a68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  am: {fileID: 0}
+  HP: 150
+  HPMax: 15
+  isGound: 0
+  isJump: 0
+  isFall: 0
+  isRun: 0
+  isRoll: 0
+  isHit: 0
+  isAttack: 0
+  isDefense: 0
+  isDie: 0
+  isBlock: 0
 --- !u!1 &870340495
 GameObject:
   m_ObjectHideFlags: 0
@@ -1625,7 +1654,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9abf677182d72b443af2e481e2a1fecb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Angles: {x: 0, y: -94, z: 24}
+  Angles: {x: 0, y: 0, z: 0}
 --- !u!114 &1080124604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1638,8 +1667,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dc558b80c211274bbea7caf41c48f6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponCol: {fileID: 765879171}
   am: {fileID: 0}
+  weaponLCol: {fileID: 0}
+  weaponRCol: {fileID: 0}
   whLeft: {fileID: 885983203}
   whRight: {fileID: 1406744183}
 --- !u!1 &1312936336
@@ -1656,6 +1686,7 @@ GameObject:
   - component: {fileID: 1312936338}
   - component: {fileID: 1312936339}
   - component: {fileID: 1312936342}
+  - component: {fileID: 1312936343}
   m_Layer: 12
   m_Name: Player
   m_TagString: Untagged
@@ -1789,6 +1820,32 @@ MonoBehaviour:
   bm: {fileID: 0}
   ac: {fileID: 0}
   wm: {fileID: 0}
+  sm: {fileID: 0}
+--- !u!114 &1312936343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1312936336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83ed3e8bb774c4b4991b4146d9874a68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  am: {fileID: 0}
+  HP: 15
+  HPMax: 15
+  isGound: 0
+  isJump: 0
+  isFall: 0
+  isRun: 0
+  isRoll: 0
+  isHit: 0
+  isAttack: 0
+  isDefense: 0
+  isDie: 0
+  isBlock: 0
 --- !u!1 &1383224147
 GameObject:
   m_ObjectHideFlags: 0
@@ -2286,8 +2343,8 @@ Transform:
   m_Father: {fileID: 1027865845}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -11.549001, y: -2.17, z: 1.6840001}
---- !u!65 &1720968716
-BoxCollider:
+--- !u!136 &1720968716
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2296,9 +2353,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.50000006
+  m_Height: 1.0000002
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.0000038146973, z: -0.000000029802322}
 --- !u!23 &1720968717
 MeshRenderer:
   m_ObjectHideFlags: 0
