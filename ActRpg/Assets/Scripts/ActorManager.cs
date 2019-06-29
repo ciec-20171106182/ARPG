@@ -8,12 +8,13 @@ public class ActorManager : MonoBehaviour
     public ActorController ac;
     public weaponManager wm;
     public stateManager sm;
+    public GameObject modle;
     // Start is called before the first frame update
     void Awake()
     {
         ac = GetComponent<ActorController>();
 
-        GameObject modle = ac.model;
+        modle = ac.model;
         GameObject sensor = transform.Find("Sensor").gameObject;
         /* bm = GetComponentInChildren<BattleManager>();
          if (bm==null)
@@ -56,12 +57,36 @@ public class ActorManager : MonoBehaviour
     }
     public void tryDoManager()
     {
-        if (sm.HP>0)
+        if (sm.isImmortal)
         {
-            sm.AddHP(-5);
+            
         }
+        else if (sm.isDefense)
+        {
+            Block();
+            sm.AddHP(0);
+        }
+        else
+        {
+            if (sm.HP<= 0)
+            {
 
-        sm.test();
+            }
+            else {
+                sm.AddHP(-5);
+                sm.test();
+                if (sm.HP > 0)
+                {
+                    Hit();
+                }
+                else
+                {
+                    Die();
+                }
+            }
+                
+        }
+        
     }
     public void Hit()
     {
@@ -76,5 +101,10 @@ public class ActorManager : MonoBehaviour
             ac.cemer.lockUNLock();
         }
         ac.cemer.enabled = false;
+        
+    }
+    public void Block()
+    {
+        ac.isSueSetTrigger("block");
     }
 }

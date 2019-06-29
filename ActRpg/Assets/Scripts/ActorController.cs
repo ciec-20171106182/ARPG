@@ -222,4 +222,12 @@ public class ActorController : MonoBehaviour
     {
         anim.SetTrigger(tiggerName);
     }
+    public void OnDieEnter()
+    {
+        pi.inputEnabled = false;
+    }
+    public void OnBlockedEnter()
+    {
+        pi.inputEnabled = false;
+    }
 }

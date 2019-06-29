@@ -8,6 +8,7 @@ public class stateManager :IActorManagerInterface
     public float HP = 15.0f;
     public float HPMax = 15.0f;
     // Start is called before the first frame update
+    [Header("一级基础状态")]
     public bool isGound;
     public bool isJump;
     public bool isFall;
@@ -18,19 +19,15 @@ public class stateManager :IActorManagerInterface
     public bool isDefense;
     public bool isDie;
     public bool isBlock;
-   
+
+    [Header("二级混合状态")]
+    public bool isImmortal;
+
     public void AddHP(float value)
     {
         HP += value;
         HP = Mathf.Clamp(HP, 0, HPMax);
-        if (HP > 0)
-        {
-            am.Hit();
-        }
-        else
-        {
-            am.Die();
-        }
+        
     }
     public void test()
     {
@@ -45,12 +42,14 @@ public class stateManager :IActorManagerInterface
         isGound=am.ac.checkState("ground");
         isJump= am.ac.checkState("run_jump");
         isFall=am.ac.checkState("fall");
-        isRun= am.ac.checkState("run");
+        
         isRoll= am.ac.checkState("roll");
         isHit= am.ac.checkState("beHit");
-        isAttack= am.ac.checkStateTag("attack1a");
+        isAttack= am.ac.checkStateTag("attack");
         isDefense = am.ac.checkState("defenseB", "defense");
         isDie = am.ac.checkState("die");
         isBlock = am.ac.checkState("blocked");
+
+        isImmortal = isRoll;
     }
 }
