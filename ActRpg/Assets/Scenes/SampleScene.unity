@@ -2156,7 +2156,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534669902}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd6d4281e5d7cd44d8c6e38bc2c1b8d8, type: 3}
   m_Name: 
@@ -2180,7 +2180,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534669902}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd70d448b18cfbc46af26466f752332c, type: 3}
   m_Name: 
@@ -3395,7 +3395,7 @@ MonoBehaviour:
   pi: {fileID: 864191473}
   cemer: {fileID: 333213509}
   walkspeed: 1.4
-  runspeed: 3.5
+  runspeed: 2
   junmVelcity: 7
   rollVelicty: 2
   rollLimitSpeed: 5
@@ -5442,8 +5442,8 @@ MonoBehaviour:
   pi: {fileID: 1312936341}
   cemer: {fileID: 870340497}
   walkspeed: 3
-  runspeed: 5
-  junmVelcity: 15
+  runspeed: 2
+  junmVelcity: 5
   rollVelicty: 2
   rollLimitSpeed: 5
   PhysicMaterialOne: {fileID: 13400000, guid: 5b2c65ebc56f72541a911e9cf6b56e53, type: 2}
